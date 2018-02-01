@@ -1,22 +1,24 @@
 
-
 const graphql = require('graphql');
 const axios = require('axios');
-//create 
+
+//bring the graphql objects
 
 const {
-  GraphQLObjectType,
-  GraphQLString
-} = graphql;
+  GraphQLObjectType
+} = graphql
 
-const UserType = new GraphQLObjectType({
+const UserType = new GraphQLObjectType ({
   name: 'users',
-  fields:{
-    id: {type: GraphQLString},
-    firstName: {type: GraphQLString},
-    age: {type: GraphQLInt}
+  fields: {
+
   },
-  resolve(parentValue, args){
-    return axios.get(`http://localhost:3000/users`)
+  resolve(){
+    
   }
 })
+
+
+
+
+//something about the root query 
