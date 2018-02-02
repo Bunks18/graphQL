@@ -1,24 +1,36 @@
 
 const graphql = require('graphql');
-const axios = require('axios');
+const _ = require('lodash');
 
-//bring the graphql objects
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLSchema } = graphql;
 
-const {
-  GraphQLObjectType
-} = graphql
+const users = [
+  { id: '1', name: 'Will', age: 23 },
+  { id: '2', name: 'Willy', age: 23 }
+];
 
-const UserType = new GraphQLObjectType ({
-  name: 'users',
+const UserType = new GraphQLObjectType({
+  name: 'User',
   fields: {
-
-  },
-  resolve(){
-    
+    id: { type: GraphQLString },
+    name: { type: GraphQLString },
+    age: { type: GraphQLInt }
   }
-})
+});
 
+const RootQuery = new GraphQLObjectType({
+  name: 'RootQueryType',
+  fields: {
+    user: {
+      type: UserType,
+      args: { id: { type: GraphQLString } },
+      resolve(parentValue, args) {
+        return _.find(users, { id: args.id });
+      }
+    }
+  }
+});
 
-
-
-//something about the root query 
+module.exports = new GraphQLSchema({
+  query: RootQuery
+});
